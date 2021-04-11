@@ -1,31 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Product create</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
-          th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
-
-    <script src="/webjars/jquery/3.0.0/jquery.min.js" th:href="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous" th:href="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
-
+<head th:replace="fragments/head :: head(~{ :: title})">
+    <title>Item form</title>
 </head>
 <body>
-<div class="container-fluid justify-content-center" style="margin-top: 20px">
+    <div th:insert="fragments/header :: header"></div>
+    <div class="container-fluid justify-content-center" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6  offset-3">
-            <h1>Add product</h1>
+            <h1>Add item</h1>
         </div>
     </div>
-    <form method="POST" th:object="${product}" th:action="@{/products/add}">
+    <form method="POST" th:object="${item}" th:action="@{/items/add}">
         <div class="form-row">
             <div class="form-group col-md-6  offset-3">
-                <label for="name">Product name</label>
+                <label for="name">Item name</label>
                 <input class="form-control" id="name" placeholder="vaistukai" type="text" th:field="*{name}"/>
             </div>
         </div>
@@ -33,7 +22,14 @@
         <div class="form-row">
             <div class="form-group col-md-6 offset-3">
                 <label for="quantity">Quantity</label>
-                <input class="form-control" id="quantity" type="number" th:field="*{quantity}"/>
+                <input class="form-control" id="quantity" type="number" th:field="*{amount}"/>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 offset-3">
+                <label for="imageUrl">Image URL</label>
+                <input class="form-control" id="imageUrl" type="text" th:field="*{picture}"/>
             </div>
         </div>
 
@@ -47,7 +43,7 @@
         <div class="form-row">
             <div class="form-group col-md-6 offset-3">
                 <label for="unitOfMeasure">Unit of measure</label>
-                <input class="form-control" id="unitOfMeasure" type="text" th:field="*{unitOfMeasure}"/>
+                <input class="form-control" id="unitOfMeasure" type="text" th:field="*{unitOfMeasurement}"/>
             </div>
         </div>
 

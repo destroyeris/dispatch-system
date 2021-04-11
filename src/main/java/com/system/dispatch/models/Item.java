@@ -3,7 +3,7 @@ package com.system.dispatch.models;
 import javax.persistence.*;
 
 @Entity
-public class Product {
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -11,27 +11,27 @@ public class Product {
 
     private String name;
 
-    private Double quantity;
+    private Double amount;
 
-    private String unitOfMeasure;
+    private String unitOfMeasurement;
 
     private Double rating;
 
-    public Product(Integer id, String name, Double quantity, String unitOfMeasure, Double rating, String image, String country) {
-        this.id = id;
-        this.name = name;
-        this.quantity = quantity;
-        this.unitOfMeasure = unitOfMeasure;
-        this.rating = rating;
-        this.image = image;
-        this.country = country;
-    }
-
-    private String image;
+    private String picture;
 
     private String country;
 
-    public Product() {
+    public Item(Integer id, String name, Double amount, String unitOfMeasurement, Double rating, String picture, String country) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+        this.unitOfMeasurement = unitOfMeasurement;
+        this.rating = rating;
+        this.picture = picture;
+        this.country = country;
+    }
+
+    public Item() {
     }
 
     public String getName() {
@@ -42,20 +42,20 @@ public class Product {
         this.name = name;
     }
 
-    public Double getQuantity() {
-        return quantity;
+    public Double getAmount() {
+        return amount;
     }
 
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
-    public String getUnitOfMeasure() {
-        return unitOfMeasure;
+    public String getUnitOfMeasurement() {
+        return unitOfMeasurement;
     }
 
-    public void setUnitOfMeasure(String unitOfMeasure) {
-        this.unitOfMeasure = unitOfMeasure;
+    public void setUnitOfMeasurement(String unitOfMeasurement) {
+        this.unitOfMeasurement = unitOfMeasurement;
     }
 
     public Double getRating() {
@@ -66,12 +66,12 @@ public class Product {
         this.rating = review;
     }
 
-    public String getImage() {
-        return image;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public String getCountry() {

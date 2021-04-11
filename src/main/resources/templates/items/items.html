@@ -1,32 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Products home</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
-          th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
-
-    <script src="/webjars/jquery/3.0.0/jquery.min.js" th:href="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous" th:href="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
-
-
+<head th:insert="fragments/head :: head(~{ :: title})">
+    <title>Products</title>
 </head>
 <body>
-
+<div th:insert="fragments/header :: header"></div>
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6 offset-3">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h1 class="card-title">My products</h1>
+                    <h1 class="card-title">My items</h1>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive" th:if="${not #lists.isEmpty(products)}">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(items)}">
                         <table class="table table-hover">
                             <thead class="thead-inverse">
                             <tr>
@@ -36,6 +23,7 @@
                                 <th>Unit of measure</th>
                                 <th>Rating</th>
                                 <th>Country</th>
+                                <th>View</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
@@ -48,6 +36,7 @@
                                 <td>5.3</td>
                                 <td>Germany</td>
                                 <td><a href="#">View</a></td>
+                                <td><a href="#">Edit</a></td>
                                 <td><a href="#">Delete</a></td>
                             </tr>
                             <tr th:remove="all">
@@ -58,18 +47,20 @@
                                 <td>6.8</td>
                                 <td>UK</td>
                                 <td><a href="#">View</a></td>
+                                <td><a href="#">Edit</a></td>
                                 <td><a href="#">Delete</a></td>
                             </tr>
-                            <tr th:each="product : ${products}">
-                                <!--/*@thymesVar id="stock" type="com.system.dispatch.models.Product"*/-->
-                                <td th:text="${product.id}">1</td>
-                                <td th:text="${product.name}">Drugs</td>
-                                <td th:text="${product.quantity}">10</td>
-                                <td th:text="${product.unitOfMeasure}">g</td>
-                                <td th:text="${product.rating}">g</td>
-                                <td th:text="${product.country}">g</td>
-                                <td><a class="btn btn-success" href="#" th:href="@{'/products/edit/' + ${product.id}}">Edit</a></td>
-                                <td><a onclick="if (!confirmWindow()) {return false}" class="btn btn-danger" href="#" th:href="@{'/products/delete/' + ${product.id}}">Delete</a></td>
+                            <tr th:each="item : ${items}">
+                                <!--/*@thymesVar id="item" type="com.system.dispatch.models.Item"*/-->
+                                <td th:text="${item.id}">1</td>
+                                <td th:text="${item.name}">Drugs</td>
+                                <td th:text="${item.amount}">10</td>
+                                <td th:text="${item.unitOfMeasurement}">g</td>
+                                <td th:text="${item.rating}">g</td>
+                                <td th:text="${item.country}">g</td>
+                                <td><a class="btn btn-info" href="#" th:href="@{'/items/' + ${item.id}}">View</a></td>
+                                <td><a class="btn btn-success" href="#" th:href="@{'/items/edit/' + ${item.id}}">Edit</a></td>
+                                <td><a onclick="if (!confirmWindow()) {return false}" class="btn btn-danger" href="#" th:href="@{'/items/delete/' + ${item.id}}">Delete</a></td>
                             </tr>
                         </table>
                     </div>
@@ -79,13 +70,13 @@
     </div>
     <div class="row">
         <div class="col-md-6 offset-3">
-            <a href="/createProduct">Create new product</a>
+            <a href="/createItem">Create new item</a>
         </div>
     </div>
 </div>
 <script>
     function confirmWindow() {
-        return window.confirm("Do you really want to delete this product?");
+        return window.confirm("Do you really want to delete this item?");
     }
 </script>
 </body>

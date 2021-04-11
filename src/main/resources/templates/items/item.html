@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/head :: head(~{ :: title})">
+    <title th:text="${item.name}">Item name</title>
+</head>
+<body>
+<div th:insert="fragments/header :: header"></div>
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            <div class="card card-primary">
+                <div class="card-header text-center">
+                    <!--/*@thymesVar id="item" type="com.system.dispatch.models.Item"*/-->
+                    <h1 class="card-title" th:text="${item.name}">Item Name</h1>
+                </div>
+                <div class="card-body">
+                    <div class="img-thumbnail">
+                        <!--/*@thymesVar id="item" type="com.system.dispatch.models.Item"*/-->
+                        <img th:src="${item.picture}"
+                             class="img-fluid rounded mx-auto d-block rounded mx-auto d-block">
+                        <div class="figure-caption">
+                            <h3 style="text-align: center" th:text="${item.name}"></h3>
+                            <h5 style="text-align: center">Quantity <span th:text="${item.amount}"></span></h5>
+                            <h5 style="text-align: center">Unit of measure <span
+                                    th:text="${item.unitOfMeasurement}"></span></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
