@@ -33,7 +33,7 @@ public class ItemController {
         return "items/item";
     }
 
-    @RequestMapping(path="/items/add", method= RequestMethod.POST)
+    @RequestMapping(path = "/items/add", method = RequestMethod.POST)
     public RedirectView add(Model model, @ModelAttribute Item product) {
         productRepository.save(product);
 

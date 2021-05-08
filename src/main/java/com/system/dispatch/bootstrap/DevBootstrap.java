@@ -2,18 +2,22 @@ package com.system.dispatch.bootstrap;
 
 import com.system.dispatch.models.Auction;
 import com.system.dispatch.models.Bid;
+import com.system.dispatch.models.Item;
 import com.system.dispatch.models.SoldItem;
 import com.system.dispatch.repositories.AuctionRepository;
 import com.system.dispatch.repositories.BidRepository;
 import com.system.dispatch.repositories.ItemRepository;
-import com.system.dispatch.models.Item;
 import com.system.dispatch.repositories.SoldItemRepository;
+import com.system.dispatch.utils.SelectAuctionWinners;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> {
@@ -33,6 +37,8 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         try {
+            ScheduledExecutorService exec = Executors.newScheduledThreadPool(1);
+            exec.scheduleAtFixedRate(new SelectAuctionWinners(auctionRepository), 10, 5 * 60, TimeUnit.SECONDS);
             initData();
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,7 +67,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     }
 
 
-    private void initAuctions(){
+    private void initAuctions() {
         Item item1 = new Item(null, "Item1", 15.0, "kg", 9.5, "", "UK");
         productRepository.save(item1);
         SoldItem soldItem = new SoldItem(10.0, 1.0, item1);
@@ -70,11 +76,11 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         Auction auction = new Auction(
                 soldItem,
                 LocalDateTime.now(),
-                LocalDateTime.of(2021, 5, 10, 14, 5, 30)
+                LocalDateTime.now().plusSeconds(60)
         );
 
         Bid bid = new Bid(12.5);
-        if(auction.addBid(bid)){
+        if (auction.addBid(bid)) {
             bidRepository.save(bid);
         }
 

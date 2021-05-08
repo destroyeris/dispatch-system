@@ -7,12 +7,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
 public class Auction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Double highestBid;
+    private String status;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     @OneToMany
@@ -20,17 +22,27 @@ public class Auction {
     @OneToOne
     private SoldItem soldItem;
 
-    public Auction() {}
+    public Auction() {
+    }
 
     public Auction(SoldItem item, LocalDateTime startTime, LocalDateTime endTime) {
         this.highestBid = item.getPrice();
         this.startTime = startTime;
         this.endTime = endTime;
+        this.status = "ACTIVE";
         this.bids = new ArrayList<Bid>();
         this.soldItem = item;
     }
 
-    public void sortBids(){
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void sortBids() {
         bids.sort((a, b) -> (int) (b.getBidSum() - a.getBidSum()));
     }
 
@@ -71,7 +83,7 @@ public class Auction {
     }
 
     public boolean addBid(Bid bid) {
-        if(bid != null && bid.getBidSum() > this.highestBid){
+        if (bid != null && bid.getBidSum() > this.highestBid) {
             this.highestBid = bid.getBidSum();
             this.bids.add(bid);
             return true;
@@ -87,7 +99,7 @@ public class Auction {
         this.soldItem = item;
     }
 
-    public String parseDateTime(LocalDateTime dt){
+    public String parseDateTime(LocalDateTime dt) {
         return dt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 

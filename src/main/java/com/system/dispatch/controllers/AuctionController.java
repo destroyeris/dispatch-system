@@ -5,11 +5,14 @@ import com.system.dispatch.repositories.AuctionRepository;
 import com.system.dispatch.repositories.BidRepository;
 import com.system.dispatch.repositories.ItemRepository;
 import com.system.dispatch.repositories.SoldItemRepository;
+import com.system.dispatch.utils.SelectAuctionWinners;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
@@ -31,14 +34,16 @@ public class AuctionController {
     @Autowired
     private BidRepository bidRepository;
 
-    private final Logger LOG = Logger.getLogger(AuctionController.class.getName());
+    private final Logger LOG = Logger.getLogger(SelectAuctionWinners.class.getName());
+
 
     @GetMapping("/auctions")
     public String getAuctions(Model model, HttpServletResponse response) {
-        model.addAttribute("auctions", auctionRepository.findAll());
+        model.addAttribute("auctions", auctionRepository.findAllActive());
         response.setStatus(HttpServletResponse.SC_OK);
         return "auctions/auctions";
     }
+
 
     @GetMapping("/auction/form")
     public String openAuctionForm(Model model, HttpServletResponse response, Boolean error) {
@@ -88,7 +93,7 @@ public class AuctionController {
     @GetMapping("/bidForm")
     public String openBiddingForm(@RequestParam Integer auction, Model model, HttpServletResponse response, Boolean error) {
         Optional<Auction> optAuction = auctionRepository.findById(auction);
-        if(optAuction.isPresent()){
+        if (optAuction.isPresent()) {
             Auction auc = optAuction.get();
             auc.sortBids();
             model.addAttribute("auction", auc);
@@ -102,7 +107,7 @@ public class AuctionController {
     @PostMapping("/bid")
     public String bid(@RequestParam Integer auction, @ModelAttribute AuctionForm auc, Model model, HttpServletResponse response) {
         Optional<Auction> optAuction = auctionRepository.findById(auction);
-        if(optAuction.isEmpty()) return getAuctions(model, response);
+        if (optAuction.isEmpty()) return getAuctions(model, response);
         Auction auctionFromDb = optAuction.get();
         try {
             Double.parseDouble(auc.getPrice());
@@ -111,7 +116,7 @@ public class AuctionController {
         }
         Bid newBid = new Bid(Double.parseDouble(auc.getPrice()));
 
-        if(!auctionFromDb.addBid(newBid)) return openBiddingForm(auction, model, response, true);
+        if (!auctionFromDb.addBid(newBid)) return openBiddingForm(auction, model, response, true);
         bidRepository.save(newBid);
         auctionRepository.save(auctionFromDb);
         return getAuctions(model, response);
