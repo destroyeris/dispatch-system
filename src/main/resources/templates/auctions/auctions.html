@@ -33,7 +33,7 @@
                                 <td th:text="${auction.highestBid}"></td>
                                 <td th:text="${auction.parseDateTime(auction.startTime)}"></td>
                                 <td th:text="${auction.parseDateTime(auction.endTime)}"></td>
-                                <td><a class="btn btn-warning" href="#" th:href="@{'/bid?auction=' + ${auction.id}}">Bid</a></td>
+                                <td><a class="btn btn-warning" href="#" th:href="@{'/bidForm?auction=' + ${auction.id}}">Bid</a></td>
                             </tr>
                         </table>
                     </div>

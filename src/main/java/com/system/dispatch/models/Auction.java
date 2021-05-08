@@ -30,6 +30,10 @@ public class Auction {
         this.soldItem = item;
     }
 
+    public void sortBids(){
+        bids.sort((a, b) -> (int) (b.getBidSum() - a.getBidSum()));
+    }
+
     public Integer getId() {
         return id;
     }

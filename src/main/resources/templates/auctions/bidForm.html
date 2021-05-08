@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head(~{ :: title})">
+    <title>Item form</title>
+</head>
+<body>
+<div th:insert="fragments/header :: header"></div>
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-8 offset-2">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h1 class="card-title">Bid on an auction</h1>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger" role="alert" th:style="${error}">
+                        Error! Check the bidding sum and try again.
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th>Item</th>
+                            <th>Amount</th>
+                            <th>Unit</th>
+                            <th>Highest bid</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td th:text="${auction.soldItem.item.name}"></td>
+                            <td th:text="${auction.soldItem.amount}"></td>
+                            <td th:text="${auction.soldItem.item.unitOfMeasurement}"></td>
+                            <td th:text="${auction.highestBid}"></td>
+                            <td th:text="${auction.parseDateTime(auction.startTime)}"></td>
+                            <td th:text="${auction.parseDateTime(auction.endTime)}"></td>
+                        </tr>
+                    </table>
+                </div>
+                <form method="POST" th:object="${auctionForm}" th:action="@{'/bid?auction=' + ${auction.id}}">
+                    <div class="form-row">
+                        <div class="form-group col-md-6 offset-3">
+                            <label for="price">Bidding sum</label>
+                            <input class="form-control" id="price" type="number" th:field="*{price}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6 offset-3">
+                            <button class="btn btn-primary">Bid</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="card-header">
+                    <h1 class="card-title">Previous bids</h1>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>Amount</th>
+                            </tr>
+                            </thead>
+                            <tr th:each="bid : ${auction.bids}">
+                                <td th:text="${bid.bidSum}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
