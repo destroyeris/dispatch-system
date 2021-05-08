@@ -1,15 +1,30 @@
 package com.system.dispatch.bootstrap;
 
+import com.system.dispatch.models.Auction;
+import com.system.dispatch.models.Bid;
+import com.system.dispatch.models.SoldItem;
+import com.system.dispatch.repositories.AuctionRepository;
+import com.system.dispatch.repositories.BidRepository;
 import com.system.dispatch.repositories.ItemRepository;
 import com.system.dispatch.models.Item;
+import com.system.dispatch.repositories.SoldItemRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 @Component
 public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private ItemRepository productRepository;
+    @Autowired
+    private AuctionRepository auctionRepository;
+    @Autowired
+    private BidRepository bidRepository;
+    @Autowired
+    private SoldItemRepository soldItemRepository;
 
     public DevBootstrap(ItemRepository productRepository) {
         this.productRepository = productRepository;
@@ -25,6 +40,8 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     private void initData() throws Exception {
+        initAuctions();
+
         Item product = new Item();
         product.setName("Weed");
         product.setAmount(10d);
@@ -41,5 +58,26 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         product2.setCountry("UK");
         product2.setUnitOfMeasurement("tablets");
         productRepository.save(product2);
+    }
+
+
+    private void initAuctions(){
+        Item item1 = new Item(null, "Item1", 15.0, "kg", 9.5, "", "UK");
+        productRepository.save(item1);
+        SoldItem soldItem = new SoldItem(10.0, 1.0, item1);
+        soldItemRepository.save(soldItem);
+
+        Auction auction = new Auction(
+                soldItem,
+                LocalDateTime.now(),
+                LocalDateTime.of(2021, 5, 10, 14, 5, 30)
+        );
+
+        Bid bid = new Bid(12.5);
+        if(auction.addBid(bid)){
+            bidRepository.save(bid);
+        }
+
+        auctionRepository.save(auction);
     }
 }
