@@ -1,7 +1,5 @@
 package com.system.dispatch.controllers;
 
-import com.system.dispatch.models.Auction;
-import com.system.dispatch.models.Bid;
 import com.system.dispatch.repositories.AuctionRepository;
 import com.system.dispatch.repositories.BidRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
