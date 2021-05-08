@@ -12,6 +12,8 @@ public class SoldItem {
     @ManyToOne
     private Item item;
 
+    public SoldItem() {}
+
     public SoldItem(Double price, Double amount, Item item) {
         this.price = price;
         this.amount = amount;

@@ -10,6 +10,8 @@ public class Bid {
     private Integer id;
     private Double bidSum;
 
+    public Bid() {}
+
     public Bid(Double bidSum) {
         this.bidSum = bidSum;
     }

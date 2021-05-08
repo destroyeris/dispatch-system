@@ -70,7 +70,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         Auction auction = new Auction(
                 soldItem,
                 LocalDateTime.now(),
-                LocalDateTime.of(2021, 05, 10, 14, 0, 0)
+                LocalDateTime.of(2021, 5, 10, 14, 5, 30)
         );
 
         Bid bid = new Bid(12.5);

@@ -3,6 +3,7 @@ package com.system.dispatch.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class Auction {
     private List<Bid> bids;
     @OneToOne
     private SoldItem soldItem;
+
+    public Auction() {}
 
     public Auction(SoldItem item, LocalDateTime startTime, LocalDateTime endTime) {
         this.highestBid = item.getPrice();
@@ -72,11 +75,15 @@ public class Auction {
         return false;
     }
 
-    public SoldItem getItem() {
+    public SoldItem getSoldItem() {
         return soldItem;
     }
 
-    public void setItem(SoldItem item) {
+    public void setSoldItem(SoldItem item) {
         this.soldItem = item;
+    }
+
+    public String parseDateTime(LocalDateTime dt){
+        return dt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }
