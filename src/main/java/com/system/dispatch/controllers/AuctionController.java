@@ -1,9 +1,6 @@
 package com.system.dispatch.controllers;
 
-import com.system.dispatch.models.Auction;
-import com.system.dispatch.models.AuctionForm;
-import com.system.dispatch.models.Item;
-import com.system.dispatch.models.SoldItem;
+import com.system.dispatch.models.*;
 import com.system.dispatch.repositories.AuctionRepository;
 import com.system.dispatch.repositories.BidRepository;
 import com.system.dispatch.repositories.ItemRepository;
@@ -88,11 +85,36 @@ public class AuctionController {
         return getAuctions(model, response);
     }
 
-    @GetMapping("/bid")
-    public String openBiddingForm(@RequestParam Integer auction, Model model, HttpServletResponse response) {
-        LOG.info("bid auction = " + auction);
-//        TODO
-        return "";
+    @GetMapping("/bidForm")
+    public String openBiddingForm(@RequestParam Integer auction, Model model, HttpServletResponse response, Boolean error) {
+        Optional<Auction> optAuction = auctionRepository.findById(auction);
+        if(optAuction.isPresent()){
+            Auction auc = optAuction.get();
+            auc.sortBids();
+            model.addAttribute("auction", auc);
+            model.addAttribute("auctionForm", new AuctionForm());
+            model.addAttribute("error", error != null && error ? "display: visible" : "display: none");
+            return "auctions/bidForm";
+        }
+        return "auction/auctions";
+    }
+
+    @PostMapping("/bid")
+    public String bid(@RequestParam Integer auction, @ModelAttribute AuctionForm auc, Model model, HttpServletResponse response) {
+        Optional<Auction> optAuction = auctionRepository.findById(auction);
+        if(optAuction.isEmpty()) return getAuctions(model, response);
+        Auction auctionFromDb = optAuction.get();
+        try {
+            Double.parseDouble(auc.getPrice());
+        } catch (Exception e) {
+            return openBiddingForm(auction, model, response, true);
+        }
+        Bid newBid = new Bid(Double.parseDouble(auc.getPrice()));
+
+        if(!auctionFromDb.addBid(newBid)) return openBiddingForm(auction, model, response, true);
+        bidRepository.save(newBid);
+        auctionRepository.save(auctionFromDb);
+        return getAuctions(model, response);
     }
 
     public LocalDateTime parseStringTime(String dt) {
