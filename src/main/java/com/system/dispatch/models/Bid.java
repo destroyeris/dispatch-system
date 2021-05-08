@@ -1,7 +1,9 @@
 package com.system.dispatch.models;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Bid {
@@ -10,7 +12,8 @@ public class Bid {
     private Integer id;
     private Double bidSum;
 
-    public Bid() {}
+    public Bid() {
+    }
 
     public Bid(Double bidSum) {
         this.bidSum = bidSum;
