@@ -86,4 +86,5 @@ public class Auction {
     public String parseDateTime(LocalDateTime dt){
         return dt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
+
 }

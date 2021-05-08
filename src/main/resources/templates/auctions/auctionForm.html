@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head(~{ :: title})">
+    <title>Item form</title>
+</head>
+<body>
+    <div th:insert="fragments/header :: header"></div>
+    <div class="container-fluid justify-content-center" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6  offset-3">
+            <h1 th:text="${title}"></h1>
+        </div>
+        <div class="alert alert-danger" role="alert" th:style="${error}">
+            Error! Check the fields and try again.
+        </div>
+    </div>
+    <form method="POST" th:object="${auction}" th:action="@{/auction/create}">
+        <div class="form-row">
+            <div class="form-group col-md-6  offset-3">
+                <label for="item">Item</label>
+                <select class="form-control" id="item" type="text" th:field="*{itemId}">
+                    <option th:each="it : ${items}" th:value="${it.id}" th:text="${it.name}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 offset-3">
+                <label for="amount">Amount</label>
+                <input class="form-control" id="amount" type="number" th:field="*{amount}"/>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 offset-3">
+                <label for="price">Price</label>
+                <input class="form-control" id="price" type="number" th:field="*{price}"/>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 offset-3">
+                <label for="startTime">Start time</label>
+                <input class="form-control" id="startTime" type="datetime-local" step="2" th:field="*{startTime}"/>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 offset-3">
+                <label for="endTime">End time</label>
+                <input class="form-control" id="endTime" type="datetime-local" step="2" th:field="*{endTime}"/>
+            </div>
+        </div>
+
+
+        <div class="form-row">
+            <div class="form-group col-md-6 offset-3">
+                <button class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
