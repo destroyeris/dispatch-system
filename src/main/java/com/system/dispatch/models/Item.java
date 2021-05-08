@@ -1,6 +1,8 @@
 package com.system.dispatch.models;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Item {
