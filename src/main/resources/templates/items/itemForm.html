@@ -16,6 +16,9 @@
             <div class="form-group col-md-6  offset-3">
                 <label for="name">Item name</label>
                 <input class="form-control" id="name" placeholder="vaistukai" type="text" th:field="*{name}"/>
+                <ul style="margin-top: 20px">
+                    <li th:each="err : ${#fields.errors('name')}" th:text="${err}" class="alert alert-danger"></li>
+                </ul>
             </div>
         </div>
 
@@ -23,6 +26,9 @@
             <div class="form-group col-md-6 offset-3">
                 <label for="quantity">Quantity</label>
                 <input class="form-control" id="quantity" type="number" th:field="*{amount}"/>
+                <ul style="margin-top: 20px">
+                    <li th:each="err : ${#fields.errors('amount')}" th:text="${err}" class="alert alert-danger"></li>
+                </ul>
             </div>
         </div>
 
@@ -30,6 +36,9 @@
             <div class="form-group col-md-6 offset-3">
                 <label for="imageUrl">Image URL</label>
                 <input class="form-control" id="imageUrl" type="text" th:field="*{picture}"/>
+                <ul style="margin-top: 20px">
+                    <li th:each="err : ${#fields.errors('picture')}" th:text="${err}" class="alert alert-danger"></li>
+                </ul>
             </div>
         </div>
 
@@ -37,6 +46,9 @@
             <div class="form-group col-md-6 offset-3">
                 <label for="country">Country</label>
                 <input class="form-control" id="country" type="text" th:field="*{country}"/>
+                <ul style="margin-top: 20px">
+                    <li th:each="err : ${#fields.errors('country')}" th:text="${err}" class="alert alert-danger"></li>
+                </ul>
             </div>
         </div>
 
@@ -44,6 +56,9 @@
             <div class="form-group col-md-6 offset-3">
                 <label for="unitOfMeasure">Unit of measure</label>
                 <input class="form-control" id="unitOfMeasure" type="text" th:field="*{unitOfMeasurement}"/>
+                <ul style="margin-top: 20px">
+                    <li th:each="err : ${#fields.errors('unitOfMeasurement')}" th:text="${err}" class="alert alert-danger"></li>
+                </ul>
             </div>
         </div>
 

@@ -1,20 +1,15 @@
 package com.system.dispatch.bootstrap;
 
-import com.system.dispatch.models.Auction;
-import com.system.dispatch.models.Bid;
-import com.system.dispatch.models.Item;
-import com.system.dispatch.models.SoldItem;
-import com.system.dispatch.repositories.AuctionRepository;
-import com.system.dispatch.repositories.BidRepository;
-import com.system.dispatch.repositories.ItemRepository;
-import com.system.dispatch.repositories.SoldItemRepository;
+import com.system.dispatch.models.*;
+import com.system.dispatch.repositories.*;
 import com.system.dispatch.utils.SelectAuctionWinners;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -22,16 +17,26 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
-    private ItemRepository productRepository;
-    @Autowired
-    private AuctionRepository auctionRepository;
-    @Autowired
-    private BidRepository bidRepository;
-    @Autowired
-    private SoldItemRepository soldItemRepository;
+    private final ItemRepository productRepository;
+    private final PlaceRepository placeRepository;
+    private final SegmentRepository segmentRepository;
+    private final AuctionRepository auctionRepository;
+    private final BidRepository bidRepository;
+    private final SoldItemRepository soldItemRepository;
 
-    public DevBootstrap(ItemRepository productRepository) {
+    public DevBootstrap(ItemRepository productRepository,
+                        PlaceRepository placeRepository,
+                        SegmentRepository segmentRepository,
+                        AuctionRepository auctionRepository,
+                        BidRepository bidRepository,
+                        SoldItemRepository soldItemRepository
+    ) {
+        this.placeRepository = placeRepository;
         this.productRepository = productRepository;
+        this.segmentRepository = segmentRepository;
+        this.auctionRepository = auctionRepository;
+        this.bidRepository = bidRepository;
+        this.soldItemRepository = soldItemRepository;
     }
 
     @Override
@@ -45,8 +50,9 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         }
     }
 
-    private void initData() throws Exception {
+    private void initData() {
         initAuctions();
+        initSegments(initLocations());
 
         Item product = new Item();
         product.setName("Weed");
@@ -66,9 +72,34 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         productRepository.save(product2);
     }
 
+    private void initSegments(List<Place> places) {
+        Segment segment = new Segment();
+
+        segment.setFirsPlace(places.get(0));
+        segment.setSecondPlace(places.get(2));
+        segment.setTravelTime(24);
+
+        segmentRepository.save(segment);
+
+        segment = new Segment();
+
+        segment.setFirsPlace(places.get(0));
+        segment.setSecondPlace(places.get(1));
+        segment.setTravelTime(11);
+
+        segmentRepository.save(segment);
+
+        segment = new Segment();
+
+        segment.setFirsPlace(places.get(1));
+        segment.setSecondPlace(places.get(2));
+        segment.setTravelTime(6);
+
+        segmentRepository.save(segment);
+    }
 
     private void initAuctions() {
-        Item item1 = new Item(null, "Item1", 15.0, "kg", 9.5, "", "UK");
+        Item item1 = new Item(null, "Item1", 15.0, "kg", 9.5, "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/c496dc3199003.5acdbd673bd52.jpg", "UK");
         productRepository.save(item1);
         SoldItem soldItem = new SoldItem(10.0, 1.0, item1);
         soldItemRepository.save(soldItem);
@@ -85,5 +116,46 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         }
 
         auctionRepository.save(auction);
+    }
+
+    private List<Place> initLocations() {
+        List<Place> places = new ArrayList<>();
+        Place place = new Place();
+
+        place.setName("A");
+        place.setLongitude(14.5);
+        place.setLatitude(13.5);
+
+        placeRepository.save(place);
+        places.add(place);
+
+        place = new Place();
+
+        place.setName("B");
+        place.setLongitude(12.45);
+        place.setLatitude(16.75);
+
+        placeRepository.save(place);
+        places.add(place);
+
+        place = new Place();
+
+        place.setName("C");
+        place.setLongitude(14.5);
+        place.setLatitude(13.5);
+
+        placeRepository.save(place);
+        places.add(place);
+
+        place = new Place();
+
+        place.setName("D");
+        place.setLongitude(14.5);
+        place.setLatitude(27.5);
+
+        placeRepository.save(place);
+        places.add(place);
+
+        return places;
     }
 }

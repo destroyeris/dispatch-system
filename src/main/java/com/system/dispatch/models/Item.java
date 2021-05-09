@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Item {
@@ -12,16 +14,21 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NotBlank
     private String name;
 
+    @Digits(integer = 6, fraction = 2)
     private Double amount;
 
+    @NotBlank
     private String unitOfMeasurement;
 
     private Double rating;
 
+    @NotBlank
     private String picture;
 
+    @NotBlank
     private String country;
 
     public Item(Integer id, String name, Double amount, String unitOfMeasurement, Double rating, String picture, String country) {
