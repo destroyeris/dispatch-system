@@ -69,15 +69,18 @@ public class AuctionController {
         LocalDateTime sDate = parseStringTime(auction.getStartTime());
         LocalDateTime eDate = parseStringTime(auction.getEndTime());
 
+        double amount = Double.parseDouble(auction.getAmount());
+        double price = Double.parseDouble(auction.getPrice());
+
         SoldItem soldItem = new SoldItem();
         Optional<Item> optItem = itemRepository.findById(Integer.parseInt(auction.getItemId()));
-        if (optItem.isPresent() && sDate.isBefore(eDate)) {
+        if ((optItem.isPresent() && sDate.isBefore(eDate)) && (amount > 0 && price > 0)) {
             soldItem.setItem(optItem.get());
         } else {
             return openAuctionForm(model, response, true);
         }
-        soldItem.setAmount(Double.parseDouble(auction.getAmount()));
-        soldItem.setPrice(Double.parseDouble(auction.getPrice()));
+        soldItem.setAmount(amount);
+        soldItem.setPrice(price);
 
         Auction newAuction = new Auction(
                 soldItem,
