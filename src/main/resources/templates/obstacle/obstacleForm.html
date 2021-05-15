@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head(~{ :: title})">
+    <title>Item form</title>
+</head>
+<body>
+<div th:insert="fragments/header :: header"></div>
+<div class="container-fluid justify-content-center" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6  offset-3">
+            <h1>Create obstacle</h1>
+        </div>
+    </div>
+    <form method="POST" th:object="${obstacle}" th:action="@{/obstacle/create}">
+        <div class="form-row">
+            <div class="form-group col-md-6  offset-3">
+                <label for="item">Select segment</label>
+                <select class="form-control" id="item" type="text" name="segmentId">
+                    <option th:each="it : ${segments}" th:value="${it.id}" th:text="${it.firstPlace.name + ' ' + it.secondPlace.name}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 offset-3">
+                <label for="expirationTime">Duration</label>
+                <input class="form-control" id="expirationTime" type="datetime-local" step="1" name="expiration"/>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 offset-3">
+                <label for="description">Description</label>
+                <input class="form-control" id="description" type="text" th:field="*{description}"/>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 offset-3">
+                <button class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

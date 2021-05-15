@@ -1,5 +1,6 @@
 package com.system.dispatch.utils.dijkstra;
 
+import com.system.dispatch.models.Place;
 import org.springframework.data.util.Pair;
 
 import java.util.HashMap;
@@ -12,6 +13,8 @@ public class Node {
     private final String name;
 
     private List<Node> shortestPath = new LinkedList<>();
+
+    private Place place;
 
     private Integer distance = Integer.MAX_VALUE;
 
@@ -27,12 +30,17 @@ public class Node {
         }
     }
 
-    public Node(String name) {
+    public Node(String name, Place place) {
         this.name = name;
+        this.place = place;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Place getPlace() {
+        return this.place;
     }
 
     public List<Node> getShortestPath() {

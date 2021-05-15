@@ -75,7 +75,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     private void initSegments(List<Place> places) {
         Segment segment = new Segment();
 
-        segment.setFirsPlace(places.get(0));
+        segment.setFirstPlace(places.get(0));
         segment.setSecondPlace(places.get(2));
         segment.setTravelTime(24);
 
@@ -83,7 +83,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
         segment = new Segment();
 
-        segment.setFirsPlace(places.get(0));
+        segment.setFirstPlace(places.get(0));
         segment.setSecondPlace(places.get(1));
         segment.setTravelTime(11);
 
@@ -91,7 +91,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
         segment = new Segment();
 
-        segment.setFirsPlace(places.get(1));
+        segment.setFirstPlace(places.get(1));
         segment.setSecondPlace(places.get(2));
         segment.setTravelTime(6);
 
@@ -122,7 +122,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         List<Place> places = new ArrayList<>();
         Place place = new Place();
 
-        place.setName("A");
+        place.setName("Kaunas");
         place.setLongitude(14.5);
         place.setLatitude(13.5);
 
@@ -131,7 +131,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
         place = new Place();
 
-        place.setName("B");
+        place.setName("Vilnius");
         place.setLongitude(12.45);
         place.setLatitude(16.75);
 
@@ -140,7 +140,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
         place = new Place();
 
-        place.setName("C");
+        place.setName("Riga");
         place.setLongitude(14.5);
         place.setLatitude(13.5);
 
@@ -149,7 +149,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
         place = new Place();
 
-        place.setName("D");
+        place.setName("Warsaw");
         place.setLongitude(14.5);
         place.setLatitude(27.5);
 

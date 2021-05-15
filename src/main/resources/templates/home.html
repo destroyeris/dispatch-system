@@ -11,9 +11,14 @@
             <h1>Welcome to dispatch system</h1>
         </div>
     </div>
+    <div th:if="${success != null}" th:text="${success}" class="alert alert-success">
+    </div>
     <div class="row">
-        <div class="col-md-6  offset-3">
+        <div class="col-md-3  offset-3">
             <a class="btn btn-primary" th:href="@{'/items'}" role="button">Items page</a>
+        </div>
+        <div class="col-md-3">
+            <a class="btn btn-primary" th:href="@{'/routes/calculate'}" role="button">Calculate route</a>
         </div>
     </div>
 </div>

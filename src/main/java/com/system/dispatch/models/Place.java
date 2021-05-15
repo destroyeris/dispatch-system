@@ -31,6 +31,10 @@ public class Place {
         this.name = name;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public Double getLongitude() {
         return longitude;
     }

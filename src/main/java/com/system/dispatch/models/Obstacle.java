@@ -1,6 +1,7 @@
 package com.system.dispatch.models;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Obstacle {
@@ -9,27 +10,34 @@ public class Obstacle {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long expirationTime;
+    private LocalDateTime expirationTime;
 
     private String description;
-
-    @OneToOne
-    private Segment segment;
 
     public Obstacle() {
     }
 
-    public Obstacle(Long expirationTime, String description, Segment segment) {
+    public Obstacle(LocalDateTime expirationTime, String description) {
         this.expirationTime = expirationTime;
         this.description = description;
-        this.segment = segment;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public LocalDateTime getExpirationTime() {
+        return expirationTime;
     }
 
-    @Id
+    public void setExpirationTime(LocalDateTime expirationTime) {
+        this.expirationTime = expirationTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }
