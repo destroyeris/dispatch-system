@@ -16,7 +16,7 @@
             <div class="form-group col-md-6  offset-3">
                 <label for="item">Select segment</label>
                 <select class="form-control" id="item" type="text" name="segmentId">
-                    <option th:each="it : ${segments}" th:value="${it.id}" th:text="${it.firstPlace.name + ' ' + it.secondPlace.name}"></option>
+                    <option th:each="it : ${segments}" th:value="${it.id}" th:text="${it.firstLocation.name + ' ' + it.secondLocation.name}"></option>
                 </select>
             </div>
         </div>

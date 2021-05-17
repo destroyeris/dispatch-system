@@ -18,20 +18,20 @@ import java.util.concurrent.TimeUnit;
 public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final ItemRepository productRepository;
-    private final PlaceRepository placeRepository;
+    private final LocationRepository locationRepository;
     private final SegmentRepository segmentRepository;
     private final AuctionRepository auctionRepository;
     private final BidRepository bidRepository;
     private final SoldItemRepository soldItemRepository;
 
     public DevBootstrap(ItemRepository productRepository,
-                        PlaceRepository placeRepository,
+                        LocationRepository locationRepository,
                         SegmentRepository segmentRepository,
                         AuctionRepository auctionRepository,
                         BidRepository bidRepository,
                         SoldItemRepository soldItemRepository
     ) {
-        this.placeRepository = placeRepository;
+        this.locationRepository = locationRepository;
         this.productRepository = productRepository;
         this.segmentRepository = segmentRepository;
         this.auctionRepository = auctionRepository;
@@ -72,27 +72,27 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         productRepository.save(product2);
     }
 
-    private void initSegments(List<Place> places) {
+    private void initSegments(List<Location> locations) {
         Segment segment = new Segment();
 
-        segment.setFirstPlace(places.get(0));
-        segment.setSecondPlace(places.get(2));
+        segment.setFirstLocation(locations.get(0));
+        segment.setSecondLocation(locations.get(2));
         segment.setTravelTime(24);
 
         segmentRepository.save(segment);
 
         segment = new Segment();
 
-        segment.setFirstPlace(places.get(0));
-        segment.setSecondPlace(places.get(1));
+        segment.setFirstLocation(locations.get(0));
+        segment.setSecondLocation(locations.get(1));
         segment.setTravelTime(11);
 
         segmentRepository.save(segment);
 
         segment = new Segment();
 
-        segment.setFirstPlace(places.get(1));
-        segment.setSecondPlace(places.get(2));
+        segment.setFirstLocation(locations.get(1));
+        segment.setSecondLocation(locations.get(2));
         segment.setTravelTime(6);
 
         segmentRepository.save(segment);
@@ -118,44 +118,44 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         auctionRepository.save(auction);
     }
 
-    private List<Place> initLocations() {
-        List<Place> places = new ArrayList<>();
-        Place place = new Place();
+    private List<Location> initLocations() {
+        List<Location> locations = new ArrayList<>();
+        Location location = new Location();
 
-        place.setName("Kaunas");
-        place.setLongitude(14.5);
-        place.setLatitude(13.5);
+        location.setName("Kaunas");
+        location.setLongitude(14.5);
+        location.setLatitude(13.5);
 
-        placeRepository.save(place);
-        places.add(place);
+        locationRepository.save(location);
+        locations.add(location);
 
-        place = new Place();
+        location = new Location();
 
-        place.setName("Vilnius");
-        place.setLongitude(12.45);
-        place.setLatitude(16.75);
+        location.setName("Vilnius");
+        location.setLongitude(12.45);
+        location.setLatitude(16.75);
 
-        placeRepository.save(place);
-        places.add(place);
+        locationRepository.save(location);
+        locations.add(location);
 
-        place = new Place();
+        location = new Location();
 
-        place.setName("Riga");
-        place.setLongitude(14.5);
-        place.setLatitude(13.5);
+        location.setName("Riga");
+        location.setLongitude(14.5);
+        location.setLatitude(13.5);
 
-        placeRepository.save(place);
-        places.add(place);
+        locationRepository.save(location);
+        locations.add(location);
 
-        place = new Place();
+        location = new Location();
 
-        place.setName("Warsaw");
-        place.setLongitude(14.5);
-        place.setLatitude(27.5);
+        location.setName("Warsaw");
+        location.setLongitude(14.5);
+        location.setLatitude(27.5);
 
-        placeRepository.save(place);
-        places.add(place);
+        locationRepository.save(location);
+        locations.add(location);
 
-        return places;
+        return locations;
     }
 }

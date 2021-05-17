@@ -1,14 +1,13 @@
 package com.system.dispatch.controllers;
 
-import com.system.dispatch.models.Place;
-import com.system.dispatch.repositories.PlaceRepository;
+import com.system.dispatch.models.Location;
+import com.system.dispatch.repositories.LocationRepository;
 import com.system.dispatch.utils.dijkstra.Graph;
 import com.system.dispatch.utils.dijkstra.GraphCalculationService;
 import com.system.dispatch.utils.dijkstra.Node;
-import com.system.dispatch.utils.dijkstra.PlaceToGraphAdapter;
+import com.system.dispatch.utils.dijkstra.LocationToGraphAdapter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -21,12 +20,12 @@ import java.util.Optional;
 @Controller
 public class RoutesController {
 
-    private final PlaceRepository placeRepository;
-    private final PlaceToGraphAdapter placeToGraphAdapter;
+    private final LocationRepository locationRepository;
+    private final LocationToGraphAdapter locationToGraphAdapter;
 
-    public RoutesController(PlaceRepository placeRepository, PlaceToGraphAdapter placeToGraphAdapter) {
-        this.placeRepository = placeRepository;
-        this.placeToGraphAdapter = placeToGraphAdapter;
+    public RoutesController(LocationRepository locationRepository, LocationToGraphAdapter locationToGraphAdapter) {
+        this.locationRepository = locationRepository;
+        this.locationToGraphAdapter = locationToGraphAdapter;
     }
 
     @PostMapping("/routes/calculate")
@@ -37,20 +36,20 @@ public class RoutesController {
             return "redirect:/routes/calculate";
         }
 
-        Optional<Place> toPlace = placeRepository.findById(Integer.valueOf(request.getParameter("to")));
-        Graph graph = this.placeToGraphAdapter.createGraphFromPlaces(getPlaces());
+        Optional<Location> toLocation = locationRepository.findById(Integer.valueOf(request.getParameter("to")));
+        Graph graph = this.locationToGraphAdapter.createGraphFromLocations(getLocations());
 
         Optional<Node> fromNode = graph.getNodes().stream()
-                .filter(node -> node.getPlace().getId().equals(Integer.valueOf(request.getParameter("from"))))
+                .filter(node -> node.getLocation().getId().equals(Integer.valueOf(request.getParameter("from"))))
                 .findFirst();
 
-        if (fromNode.isPresent() && toPlace.isPresent()) {
+        if (fromNode.isPresent() && toLocation.isPresent()) {
             GraphCalculationService.calculateShortestPathFromSource(graph, fromNode.get());
-            Optional<Node> toNode = graph.getNodes().stream().filter(node -> node.getPlace().equals(toPlace.get())).findFirst();
+            Optional<Node> toNode = graph.getNodes().stream().filter(node -> node.getLocation().equals(toLocation.get())).findFirst();
 
             model.addAttribute("toNode", toNode.get());
         } else {
-            model.addAttribute("error", "Could not find selected places");
+            model.addAttribute("error", "Could not find selected locations");
 
             return "route/routeForm";
         }
@@ -64,8 +63,8 @@ public class RoutesController {
 
     @GetMapping("/routes/calculate")
     public String routesForm(Model model) {
-        List<Place> places = getPlaces();
-        model.addAttribute("places", places);
+        List<Location> locations = getLocations();
+        model.addAttribute("locations", locations);
 
 //        Graph graph = this.placeToGraphAdapter.createGraphFromPlaces(places);
 //        GraphCalculationService.calculateShortestPathFromSource(graph, graph.getNodes().iterator().next());
@@ -73,14 +72,14 @@ public class RoutesController {
         return "route/routeForm";
     }
 
-    private List<Place> getPlaces() {
-        Iterable<Place> placeIterable = placeRepository.findAll();
-        List<Place> places = new ArrayList<>();
+    private List<Location> getLocations() {
+        Iterable<Location> locationIterable = locationRepository.findAll();
+        List<Location> locations = new ArrayList<>();
 
-        for (Place place : placeIterable) {
-            places.add(place);
+        for (Location location : locationIterable) {
+            locations.add(location);
         }
 
-        return places;
+        return locations;
     }
 }

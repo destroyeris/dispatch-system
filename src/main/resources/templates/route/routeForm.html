@@ -16,18 +16,18 @@
     <form method="POST" th:action="@{/routes/calculate}">
         <div class="form-row">
             <div class="form-group col-md-6  offset-3">
-                <label for="fromPlace">Select from place</label>
-                <select class="form-control" id="fromPlace" type="text" name="from">
-                    <option th:each="it : ${places}" th:value="${it.id}" th:text="${it.name}"></option>
+                <label for="fromLocation">Select from location</label>
+                <select class="form-control" id="fromLocation" type="text" name="from">
+                    <option th:each="it : ${locations}" th:value="${it.id}" th:text="${it.name}"></option>
                 </select>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-6  offset-3">
-                <label for="toPlace">Select to place</label>
-                <select class="form-control" id="toPlace" type="text" name="to">
-                    <option th:each="it : ${places}" th:value="${it.id}" th:text="${it.name}"></option>
+                <label for="toLocation">Select to location</label>
+                <select class="form-control" id="toLocation" type="text" name="to">
+                    <option th:each="it : ${locations}" th:value="${it.id}" th:text="${it.name}"></option>
                 </select>
             </div>
         </div>

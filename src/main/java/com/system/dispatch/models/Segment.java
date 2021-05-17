@@ -10,12 +10,12 @@ public class Segment {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="first_place_id")
-    private Place firstPlace;
+    @JoinColumn(name="first_location_id")
+    private Location firstLocation;
 
     @ManyToOne
-    @JoinColumn(name="second_place_id")
-    private Place secondPlace;
+    @JoinColumn(name="second_location_id")
+    private Location secondLocation;
 
     @OneToOne
     private Obstacle obstacle;
@@ -25,10 +25,10 @@ public class Segment {
     public Segment() {
     }
 
-    public Segment(Integer id, Place firstPlace, Place secondPlace, Integer travelTime, Obstacle obstacle) {
+    public Segment(Integer id, Location firstLocation, Location secondLocation, Integer travelTime, Obstacle obstacle) {
         this.id = id;
-        this.firstPlace = firstPlace;
-        this.secondPlace = secondPlace;
+        this.firstLocation = firstLocation;
+        this.secondLocation = secondLocation;
         this.travelTime = travelTime;
         this.obstacle = obstacle;
     }
@@ -41,20 +41,20 @@ public class Segment {
         this.id = id;
     }
 
-    public Place getFirstPlace() {
-        return firstPlace;
+    public Location getFirstLocation() {
+        return firstLocation;
     }
 
-    public void setFirstPlace(Place firsPlace) {
-        this.firstPlace = firsPlace;
+    public void setFirstLocation(Location firstLocation) {
+        this.firstLocation = firstLocation;
     }
 
-    public Place getSecondPlace() {
-        return secondPlace;
+    public Location getSecondLocation() {
+        return secondLocation;
     }
 
-    public void setSecondPlace(Place secondPlace) {
-        this.secondPlace = secondPlace;
+    public void setSecondLocation(Location secondLocation) {
+        this.secondLocation = secondLocation;
     }
 
     public Integer getTravelTime() {

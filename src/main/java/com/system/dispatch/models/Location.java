@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Place {
+public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,17 +15,17 @@ public class Place {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "first_place_id")
+    @JoinColumn(name = "first_location_id")
     private Set<Segment> firstLocationSegments;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "second_place_id")
+    @JoinColumn(name = "second_location_id")
     private Set<Segment> secondLocationSegments;
 
-    public Place() {
+    public Location() {
     }
 
-    public Place(Double longitude, Double latitude, String name) {
+    public Location(Double longitude, Double latitude, String name) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.name = name;
